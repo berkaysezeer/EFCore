@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.DatabaseFirst", "EFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.DatabaseFirstByScaffold", "EFCore.DatabaseFirstByScaffold\EFCore.DatabaseFirstByScaffold.csproj", "{8BD71212-2E23-46C5-875D-491A4B09AE1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.CodeFirst", "EFCore.CodeFirst\EFCore.CodeFirst.csproj", "{02620EB9-62AA-4E85-9C91-494792C7F5AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8BD71212-2E23-46C5-875D-491A4B09AE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD71212-2E23-46C5-875D-491A4B09AE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BD71212-2E23-46C5-875D-491A4B09AE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02620EB9-62AA-4E85-9C91-494792C7F5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02620EB9-62AA-4E85-9C91-494792C7F5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02620EB9-62AA-4E85-9C91-494792C7F5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02620EB9-62AA-4E85-9C91-494792C7F5AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
