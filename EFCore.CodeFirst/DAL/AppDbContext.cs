@@ -17,5 +17,21 @@ namespace EFCore.CodeFirst.DAL
             Initializer.Build();
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
         }
+
+        public override int SaveChanges()
+        {
+            ChangeTracker.Entries().ToList().ForEach(x =>
+            {
+                if (x.Entity is Product product)
+                {
+                    if (x.State == EntityState.Added)
+                    {
+                        product.CreatedDate = DateTime.Now;
+                    }
+                }
+            });
+
+            return base.SaveChanges();
+        }
     }
 }

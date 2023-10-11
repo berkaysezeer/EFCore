@@ -26,7 +26,7 @@ using (var context = new AppDbContext())
         }
     });
 
-    await context.SaveChangesAsync();
+    context.SaveChanges();
 
     //tüm veriler track edilir.
     var products = await context.Products
