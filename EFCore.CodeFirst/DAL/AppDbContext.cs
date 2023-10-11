@@ -18,6 +18,13 @@ namespace EFCore.CodeFirst.DAL
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //FLUENT API ile tablo adı değiştirme
+            //modelBuilder.Entity<Product>().ToTable("ProductTBB","ProductBbb");
+            //modelBuilder.Entity<Product>().HasKey(x=>x.Id); //tablonun primary key alanını belirler
+        }
+
         public override int SaveChanges()
         {
             ChangeTracker.Entries().ToList().ForEach(x =>

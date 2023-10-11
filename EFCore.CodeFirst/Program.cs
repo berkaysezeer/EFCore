@@ -6,53 +6,49 @@ using Microsoft.EntityFrameworkCore;
 //appsetting.json okunabilir oluyor
 Initializer.Build();
 
-
 using (var context = new AppDbContext())
 {
-    context.Products.Add(new Product { Name = "Kalem 1", Price = 10, Stock = 100, Barcode = "1330" });
-    context.Products.Add(new Product { Name = "Kalem 2", Price = 10, Stock = 100, Barcode = "1331" });
-    context.Products.Add(new Product { Name = "Kalem 2", Price = 10, Stock = 100, Barcode = "1331" });
-
-    //her seferinde datetime crateddate girişi yapmıyoruz. Bunu daha merkezi bir yer olan changetracker içinde yapıyoruz. tek tek yazmamızdansa tek bir seferde halletmiş oluyoruz
-
-    context.ChangeTracker.Entries().ToList().ForEach(x =>
-    {
-        if (x.Entity is Product product)
-        {
-            if (x.State == EntityState.Added)
-            {
-                product.CreatedDate = DateTime.Now;
-            }
-        }
-    });
-
-    context.SaveChanges();
-
-    //tüm veriler track edilir.
-    var products = await context.Products
-        .AsNoTracking() //sql tarafından gelen datanın ef core tarafına memoryde track edilmemesini sağlar
-        .ToListAsync();
-
-    //var products = await context.Products
-    //   .ToListAsync();
-
-    //products.ForEach(x =>
-    //{
-    //    x.Stock += 10;
-    //    //Console.WriteLine($"{x.Name} - {x.Price} ({x.Stock})");
-    //});
-
-    //eğer AsNoTracking() kullansaydık bu koşula girmeyecekti çünkü track edilmesini engellemiş olacaktık
-    context.ChangeTracker.Entries().ToList().ForEach(x =>
-    {
-        if (x.Entity is Product product)
-        {
-            Console.WriteLine($"{product.Name} - {product.Price} ({product.Stock})");
-        }
-    });
-
-    await context.SaveChangesAsync();
+    
 }
+
+#region Tracker
+//using (var context = new AppDbContext())
+//{
+//    context.Products.Add(new Product { Name = "Kalem 1", Price = 10, Stock = 100, Barcode = "1330", Description = "Lorem ipsum" });
+//    context.Products.Add(new Product { Name = "Kalem 2", Price = 10, Stock = 100, Barcode = "1331", Description = "Lorem ipsum" });
+//    context.Products.Add(new Product { Name = "Kalem 2", Price = 10, Stock = 100, Barcode = "1331", Description = "Lorem ipsum" });
+
+//    //her seferinde datetime crateddate girişi yapmıyoruz. Bunu daha merkezi bir yer olan changetracker içinde yapıyoruz. tek tek yazmamızdansa tek bir seferde halletmiş oluyoruz
+
+//    context.SaveChanges();
+
+//    //tüm veriler track edilir.
+//    var products = await context.Products
+//        .AsNoTracking() //sql tarafından gelen datanın ef core tarafına memoryde track edilmemesini sağlar
+//        .ToListAsync();
+
+//    //var products = await context.Products
+//    //   .ToListAsync();
+
+//    //products.ForEach(x =>
+//    //{
+//    //    x.Stock += 10;
+//    //    //Console.WriteLine($"{x.Name} - {x.Price} ({x.Stock})");
+//    //});
+
+//    //eğer AsNoTracking() kullansaydık bu koşula girmeyecekti çünkü track edilmesini engellemiş olacaktık
+//    context.ChangeTracker.Entries().ToList().ForEach(x =>
+//    {
+//        if (x.Entity is Product product)
+//        {
+//            Console.WriteLine($"{product.Name} - {product.Price} ({product.Stock})");
+//        }
+//    });
+
+//    await context.SaveChangesAsync();
+//}
+
+#endregion
 
 #region States
 //using (var context = new AppDbContext())
