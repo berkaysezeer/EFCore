@@ -16,9 +16,13 @@ namespace EFCore.CodeFirst.DAL
 
         [Column("Name2", TypeName = "nvarchar(100)", Order = 3)] //kolon adını değiştiriyoruz, tipini belirliyoruz, tablodaki sırasını belirliyoruz
         //Order sadece ilk kez oluşan tablo için geçerlidir
+        [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
-        [Column("PriceValue",TypeName ="decimal(15,2)",Order = 2)]
+
+        [MaxLength(255)]
+        public string? Description { get; set; }
+
+        [Column("PriceValue", TypeName = "decimal(15,2)", Order = 2)]
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Barcode { get; set; }

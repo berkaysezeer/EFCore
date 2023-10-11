@@ -23,6 +23,9 @@ namespace EFCore.CodeFirst.DAL
             //FLUENT API ile tablo adı değiştirme
             //modelBuilder.Entity<Product>().ToTable("ProductTBB","ProductBbb");
             //modelBuilder.Entity<Product>().HasKey(x=>x.Id); //tablonun primary key alanını belirler
+            //modelBuilder.Entity<Product>().Property(x => x.Name).IsRequired();
+            //modelBuilder.Entity<Product>().Property(x => x.Description).HasMaxLength(255);
+            //modelBuilder.Entity<Product>().Property(x => x.Description).IsRequired().HasMaxLength(255).IsFixedLength(); //max ve min 255 karakter olabilceğini belirtiyor
         }
 
         public override int SaveChanges()
