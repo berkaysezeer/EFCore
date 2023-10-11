@@ -11,6 +11,7 @@ namespace EFCore.CodeFirst.DAL
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,6 +27,11 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().Property(x => x.Name).IsRequired();
             //modelBuilder.Entity<Product>().Property(x => x.Description).HasMaxLength(255);
             //modelBuilder.Entity<Product>().Property(x => x.Description).IsRequired().HasMaxLength(255).IsFixedLength(); //max ve min 255 karakter olabilceğini belirtiyor
+
+            /*modelBuilder.Entity<Category>()
+                 .HasMany(x => x.Products)
+                 .WithOne(x => x.Category)
+                 .HasForeignKey(x => x.CategoryId);*/
         }
 
         //public override int SaveChanges()

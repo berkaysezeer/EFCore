@@ -20,12 +20,17 @@ namespace EFCore.CodeFirst.DAL
         public string Name { get; set; }
 
         //[MaxLength(255)]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         //[Column("PriceValue", TypeName = "decimal(15,2)", Order = 2)]
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Barcode { get; set; }
         public DateTime? CreatedDate { get; set; }
+
+        //One to Many
+
+        public Category Category { get; set; } //navigation property
+        public int CategoryId { get; set; }
     }
 }
