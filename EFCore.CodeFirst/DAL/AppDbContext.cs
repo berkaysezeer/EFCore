@@ -28,20 +28,20 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().Property(x => x.Description).IsRequired().HasMaxLength(255).IsFixedLength(); //max ve min 255 karakter olabilceğini belirtiyor
         }
 
-        public override int SaveChanges()
-        {
-            ChangeTracker.Entries().ToList().ForEach(x =>
-            {
-                if (x.Entity is Product product)
-                {
-                    if (x.State == EntityState.Added)
-                    {
-                        product.CreatedDate = DateTime.Now;
-                    }
-                }
-            });
+        //public override int SaveChanges()
+        //{
+        //    ChangeTracker.Entries().ToList().ForEach(x =>
+        //    {
+        //        if (x.Entity is Product product)
+        //        {
+        //            if (x.State == EntityState.Added)
+        //            {
+        //                product.CreatedDate = DateTime.Now;
+        //            }
+        //        }
+        //    });
 
-            return base.SaveChanges();
-        }
+        //    return base.SaveChanges();
+        //}
     }
 }

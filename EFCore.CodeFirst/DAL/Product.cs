@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace EFCore.CodeFirst.DAL
 {
-    [Table("ProductTb", Schema = "products")] //tablo adını ProductTb yapmış oluruz
+    //[Table("ProductTb", Schema = "products")] //tablo adını ProductTb yapmış oluruz
     public class Product
     {
         //[Key] primary key için 
         public int Id { get; set; }
 
-        [Column("Name2", TypeName = "nvarchar(100)", Order = 3)] //kolon adını değiştiriyoruz, tipini belirliyoruz, tablodaki sırasını belirliyoruz
+        /*[Column("Name2", TypeName = "nvarchar(100)", Order = 3)] //kolon adını değiştiriyoruz, tipini belirliyoruz, tablodaki sırasını belirliyoruz*/
         //Order sadece ilk kez oluşan tablo için geçerlidir
-        [Required]
+        //[Required]
         public string Name { get; set; }
 
-        [MaxLength(255)]
+        //[MaxLength(255)]
         public string? Description { get; set; }
 
-        [Column("PriceValue", TypeName = "decimal(15,2)", Order = 2)]
+        //[Column("PriceValue", TypeName = "decimal(15,2)", Order = 2)]
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Barcode { get; set; }
