@@ -27,12 +27,33 @@ using (var context = new AppDbContext())
 
     //context.SaveChanges();
 
-    #region One to one
-    //1.yol
-    var product = new Product { Name = "Uçlu kalem", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", CategoryId = 1, ProductFeature = new() { Color = "Blue", Height = 100, Width = 100 } };
-    context.Products.Add(product);
+    //#region One to one
+    ////1.yol
+    //var product = new Product { Name = "Uçlu kalem", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", CategoryId = 1, ProductFeature = new() { Color = "Blue", Height = 100, Width = 100 } };
+    //context.Products.Add(product);
+    //context.SaveChanges();
+    //#endregion
+
+    #region Many To Many
+    //var student = new Student() { Age = 26, FullName = "Berkay Sezer" };
+    //student.Teachers.Add(new() { Age = 24, FullName = "Ecem Bülbül" });
+    //context.Add(student);
+
+    var teacher = new Teacher()
+    {
+        FullName = "Berkay Sezer",
+        Age = 26,
+        Students = new List<Student>() {
+    new Student () { Age = 24,FullName = "Ali Veli"},
+    new Student() { Age = 24,FullName="Ayşe Fatma"}
+
+    }
+    };
+
+    context.Add(teacher);
     context.SaveChanges();
     #endregion
+
     Console.WriteLine("Kaydedildi");
 }
 

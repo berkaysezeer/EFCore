@@ -12,6 +12,6 @@ namespace EFCore.CodeFirst.DAL
         public string FullName { get; set; }
         public int Age { get; set; }
 
-        public List<Student> Students { get; set; }
+        public List<Student> Students { get; set; } = new(); //.Students.Add dediğimizde hata vermemesi için
     }
 }
