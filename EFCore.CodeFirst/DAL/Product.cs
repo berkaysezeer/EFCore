@@ -35,7 +35,5 @@ namespace EFCore.CodeFirst.DAL
 
         public ProductFeature ProductFeature { get; set; }
 
-        //one to one ilişkide child tabloda primary key ve foreign keyi aynı tutabiliriz (best practice)
-        public ProductFeature2 ProductFeature2 { get; set; }
     }
 }

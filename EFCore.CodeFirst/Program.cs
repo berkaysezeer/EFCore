@@ -8,7 +8,32 @@ Initializer.Build();
 
 using (var context = new AppDbContext())
 {
-    
+    ////Kalemler kategorisine kalem 1'i ekliyoruz
+    //var category = new Category() { Name = "Kalemler" };
+
+    //#region 2. Yol One to many
+    ////2.yol 
+    ////category.Products.Add(new() { Name = "Kalem 1", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber"});
+    ////context.Add(category);
+    //#endregion
+
+    //#region 1. Yol One to many
+    //var product = new Product() { Name = "Kalem 1", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", Category = category };
+
+    ////kategoriyi de veri tabanına ekleyecek
+    //context.Products.Add(product);
+    ////context.Add(product);
+    //#endregion
+
+    //context.SaveChanges();
+
+    #region One to one
+    //1.yol
+    var product = new Product { Name = "Uçlu kalem", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", CategoryId = 1, ProductFeature = new() { Color = "Blue", Height = 100, Width = 100 } };
+    context.Products.Add(product);
+    context.SaveChanges();
+    #endregion
+    Console.WriteLine("Kaydedildi");
 }
 
 #region Tracker

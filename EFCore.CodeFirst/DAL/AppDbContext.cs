@@ -15,7 +15,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
-        public DbSet<ProductFeature2> ProductFeatures2 { get; set; }
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,10 +45,10 @@ namespace EFCore.CodeFirst.DAL
                  .HasForeignKey<ProductFeature>(x => x.ProductId); //Foreign Key olacak tabloyu Generic olarak belirtmemiz gerekiyor */
 
             //one to one ilişkide child tabloda primary key ve foreign keyi aynı tutabiliriz (best practice)
-            modelBuilder.Entity<Product>()
-                  .HasOne(x => x.ProductFeature2)
-                  .WithOne(x => x.Product)
-                  .HasForeignKey<ProductFeature2>(x => x.Id);
+            /*modelBuilder.Entity<Product>()
+                   .HasOne(x => x.ProductFeature2)
+                   .WithOne(x => x.Product)
+                   .HasForeignKey<ProductFeature2>(x => x.Id);*/
 
             /* modelBuilder.Entity<Student>()
                  .HasMany(x => x.Teachers)

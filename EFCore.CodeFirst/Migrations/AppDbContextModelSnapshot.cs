@@ -81,10 +81,7 @@ namespace EFCore.CodeFirst.Migrations
             modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -93,38 +90,12 @@ namespace EFCore.CodeFirst.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Width")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.ToTable("ProductFeatures");
-                });
-
-            modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature2", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductFeatures2");
                 });
 
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Student", b =>
@@ -197,18 +168,7 @@ namespace EFCore.CodeFirst.Migrations
                 {
                     b.HasOne("EFCore.CodeFirst.DAL.Product", "Product")
                         .WithOne("ProductFeature")
-                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("EFCore.CodeFirst.DAL.ProductFeature2", b =>
-                {
-                    b.HasOne("EFCore.CodeFirst.DAL.Product", "Product")
-                        .WithOne("ProductFeature2")
-                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature2", "Id")
+                        .HasForeignKey("EFCore.CodeFirst.DAL.ProductFeature", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -238,9 +198,6 @@ namespace EFCore.CodeFirst.Migrations
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Product", b =>
                 {
                     b.Navigation("ProductFeature")
-                        .IsRequired();
-
-                    b.Navigation("ProductFeature2")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
