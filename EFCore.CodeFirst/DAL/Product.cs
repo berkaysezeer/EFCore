@@ -28,9 +28,14 @@ namespace EFCore.CodeFirst.DAL
         public string Barcode { get; set; }
         public DateTime? CreatedDate { get; set; }
 
-        //One to Many
+        //One to Many Convension
 
         public Category Category { get; set; } //navigation property
         public int CategoryId { get; set; }
+
+        public ProductFeature ProductFeature { get; set; }
+
+        //one to one ilişkide child tabloda primary key ve foreign keyi aynı tutabiliriz (best practice)
+        public ProductFeature2 ProductFeature2 { get; set; }
     }
 }
