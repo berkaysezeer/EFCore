@@ -11,48 +11,56 @@ using (var context = new AppDbContext())
     ////Kalemler kategorisine kalem 1'i ekliyoruz
     //var category = new Category() { Name = "Kalemler" };
 
-    //#region 2. Yol One to many
+    #region 2. Yol One to many
     ////2.yol 
     ////category.Products.Add(new() { Name = "Kalem 1", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber"});
     ////context.Add(category);
-    //#endregion
+    #endregion
 
-    //#region 1. Yol One to many
+    #region 1. Yol One to many
     //var product = new Product() { Name = "Kalem 1", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", Category = category };
 
     ////kategoriyi de veri tabanına ekleyecek
     //context.Products.Add(product);
     ////context.Add(product);
-    //#endregion
+    #endregion
 
-    //context.SaveChanges();
-
-    //#region One to one
+    #region One to one
     ////1.yol
     //var product = new Product { Name = "Uçlu kalem", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber", CategoryId = 1, ProductFeature = new() { Color = "Blue", Height = 100, Width = 100 } };
     //context.Products.Add(product);
     //context.SaveChanges();
-    //#endregion
+    #endregion
 
     #region Many To Many
     //var student = new Student() { Age = 26, FullName = "Berkay Sezer" };
     //student.Teachers.Add(new() { Age = 24, FullName = "Ecem Bülbül" });
     //context.Add(student);
 
-    var teacher = new Teacher()
-    {
-        FullName = "Berkay Sezer",
-        Age = 26,
-        Students = new List<Student>() {
-    new Student () { Age = 24,FullName = "Ali Veli"},
-    new Student() { Age = 24,FullName="Ayşe Fatma"}
+    //var teacher = new Teacher()
+    //{
+    //    FullName = "Berkay Sezer",
+    //    Age = 26,
+    //    Students = new List<Student>() {
+    //new () { Age = 24,FullName = "Ali Veli"},
+    //new () { Age = 24,FullName="Ayşe Fatma"}
 
-    }
-    };
+    //}
+    //};
 
-    context.Add(teacher);
-    context.SaveChanges();
+    //context.Add(teacher);
+
+    //var teacher = context.Teachers.First(x => x.FullName == "Berkay Sezer");
+
+    //teacher.Students.AddRange(new List<Student>()
+    //{
+    //    new(){FullName="Fatma Kaya", Age =10},
+    //    new(){FullName="Cevdet Nevale", Age = 19}
+    //});
+
+    //context.SaveChanges();
     #endregion
+
 
     Console.WriteLine("Kaydedildi");
 }

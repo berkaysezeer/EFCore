@@ -15,7 +15,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
-       
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -58,6 +58,12 @@ namespace EFCore.CodeFirst.DAL
                  x => x.HasOne<Teacher>().WithMany().HasForeignKey("Teacher_Id").HasConstraintName("FK_TeacherId"),
                  x => x.HasOne<Student>().WithMany().HasForeignKey("Student_Id").HasConstraintName("FK_StudentId")
                  );*/
+
+            //Precision fluent api
+            //modelBuilder.Entity<Product>().Property(x => x.Price).HasPrecision(15,2)
+
+            //Price ve Kdv bilgisini çarğarak veritabanına yazar
+            modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
         }
 
         //public override int SaveChanges()

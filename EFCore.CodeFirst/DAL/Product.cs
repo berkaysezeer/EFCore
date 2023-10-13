@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,10 +24,23 @@ namespace EFCore.CodeFirst.DAL
         public string Description { get; set; }
 
         //[Column("PriceValue", TypeName = "decimal(15,2)", Order = 2)]
+        [Precision(15, 2)] //ondalık belirleme attribute
         public decimal Price { get; set; }
+
         public int Stock { get; set; }
+
+        [Precision(15,2)] //ondalık belirleme attribute
+        public decimal Kdv { get; set; }
+
+        [Precision(15, 2)] //ondalık belirleme attribute
+        public decimal PriceKdv { get; set; }
         public string Barcode { get; set; }
-        public DateTime? CreatedDate { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //sadece insert çalışırken CreatedDate default olarak doldurulur. değer vermemiz gerek kalmaz
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)] //hem update hem de inser yapıldığında LastAccessDate DateTime.Now; doldurulur
+        public DateTime? LastAccessDate { get; set; } = DateTime.Now;
 
         //One to Many Convension
 
