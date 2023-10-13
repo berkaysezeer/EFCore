@@ -62,9 +62,25 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Eager Loading
-    var categoryWithProducts = context.Categories.Include(c => c.Products).First();
-    var productsWithPF = context.Products.Include(c => c.ProductFeature).First();
-    var product = context.Products.Include(x => x.Category).Include(x => x.ProductFeature).First();
+    //var categoryWithProducts = context.Categories.Include(c => c.Products).First();
+    //var productsWithPF = context.Products.Include(c => c.ProductFeature).First();
+    //var product = context.Products.Include(x => x.Category).Include(x => x.ProductFeature).First();
+    #endregion
+
+    #region Explicit Loading
+    //örn. senaryoda kategori içerisinde bulunan productlara öncesinde ihtiyacımız olmadı. Fakat sonradan ihtiyacımız olursa Explicit Loading kullanabiliriz
+    var category = context.Categories.First();
+    //
+    //
+    //
+    if (true)
+    {
+        //1. yol
+        var products = context.Products.Where(x => x.CategoryId == category.Id).ToList();
+
+        //2.yol (best practice)
+        context.Entry(category).Collection(x => x.Products).Load();
+    }
     #endregion
 
     Console.WriteLine("Kaydedildi");
