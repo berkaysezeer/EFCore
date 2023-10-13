@@ -68,32 +68,37 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Explicit Loading
-    //örn. senaryoda kategori içerisinde bulunan productlara öncesinde ihtiyacımız olmadı. Fakat sonradan ihtiyacımız olursa Explicit Loading kullanabiliriz
-    var category = context.Categories.First();
-    //
-    //
-    //
-    if (true)
-    {
-        //1. yol
-        var products = context.Products.Where(x => x.CategoryId == category.Id).ToList();
+    ////örn. senaryoda kategori içerisinde bulunan productlara öncesinde ihtiyacımız olmadı. Fakat sonradan ihtiyacımız olursa Explicit Loading kullanabiliriz
+    //var category = context.Categories.First();
+    ////
+    ////
+    ////
+    //if (true)
+    //{
+    //    //1. yol
+    //    var products = context.Products.Where(x => x.CategoryId == category.Id).ToList();
 
-        //2.yol (best practice)
-        context.Entry(category).Collection(x => x.Products).Load();
-    }
+    //    //2.yol (best practice)
+    //    context.Entry(category).Collection(x => x.Products).Load();
+    //}
 
-    var product = context.Products.First();
-    //
-    //
-    //
-    if (true)
-    {
-        //one to one ilişki olduğu için Reference kullanmamız gerekiyor
-        context.Entry(product).Reference(x => x.ProductFeature).Load();
-    }
+    //var product = context.Products.First();
+    ////
+    ////
+    ////
+    //if (true)
+    //{
+    //    //one to one ilişki olduğu için Reference kullanmamız gerekiyor
+    //    context.Entry(product).Reference(x => x.ProductFeature).Load();
+    //}
     #endregion
 
-    Console.WriteLine("Kaydedildi");
+    #region Lazy Loading 
+    //Microsoft.EntityFrameworkCore.Proxies
+
+    //var category = await context.Categories.FirstAsync();
+    //var products = category.Products;
+    #endregion
 }
 
 #region Tracker

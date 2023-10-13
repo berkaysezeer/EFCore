@@ -32,7 +32,6 @@ namespace EFCore.CodeFirst.DAL
         [Precision(15,2)] //ondalık belirleme attribute
         public decimal Kdv { get; set; }
 
-        [Precision(15, 2)] //ondalık belirleme attribute
         public decimal PriceKdv { get; set; }
         public string Barcode { get; set; }
 
@@ -44,10 +43,11 @@ namespace EFCore.CodeFirst.DAL
 
         //One to Many Convension
 
-        public Category Category { get; set; } //navigation property
+        //Lazy Loading yapabilmek için virtual yapıyoruz
+        public virtual Category Category { get; set; } //navigation property
         public int CategoryId { get; set; }
 
-        public ProductFeature ProductFeature { get; set; }
+        public virtual ProductFeature ProductFeature { get; set; }
 
     }
 }

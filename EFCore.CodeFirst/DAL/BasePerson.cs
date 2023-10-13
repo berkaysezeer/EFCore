@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace EFCore.CodeFirst.DAL
 {
-    public class Student
+    public class BasePerson
     {
         public int Id { get; set; }
-        public int Age { get; set; }
         public string FullName { get; set; }
-        public virtual List<Teacher> Teachers { get; set; } = new(); //.Teachers.Add dediğimizde hata vermemesi için
+        public int Age { get; set; }
     }
 }

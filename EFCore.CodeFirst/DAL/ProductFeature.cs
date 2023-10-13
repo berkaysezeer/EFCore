@@ -17,6 +17,6 @@ namespace EFCore.CodeFirst.DAL
 
         //Convension
         //public int ProductId { get; set; } //child class yapmamızı sağlıyor
-        public Product Product { get; set; } //navigation property
+        public virtual Product Product { get; set; } //navigation property
     }
 }

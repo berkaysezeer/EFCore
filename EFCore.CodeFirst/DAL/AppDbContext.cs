@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,25 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
+        //Base Class'ı DbSet olarak eklemiyoruz
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build();
+            //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).UseLazyLoadingProxies().UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
+
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
+
+            /*
+            Trace
+            Debug
+            Information
+            Warning
+            Error
+            Critical         
+             */
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

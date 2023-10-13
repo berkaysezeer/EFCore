@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231013172033_initial")]
-    partial class initial
+    [Migration("20231013180445_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,8 +83,7 @@ namespace EFCore.CodeFirst.Migrations
 
                     b.Property<decimal>("PriceKdv")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasPrecision(15, 2)
-                        .HasColumnType("decimal(15,2)")
+                        .HasColumnType("decimal(18,2)")
                         .HasComputedColumnSql("[Price]*[Kdv]");
 
                     b.Property<int>("Stock")
