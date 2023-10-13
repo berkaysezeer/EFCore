@@ -64,6 +64,18 @@ namespace EFCore.CodeFirst.DAL
 
             //Price ve Kdv bilgisini çarğarak veritabanına yazar
             modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
+
+            #region DeleteBehavior
+            //eğer parent sinilirse child tablodaki categoryid alanı null hale gelir
+            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.SetNull);
+
+            //eğer parent silinmeye çalışılırsa ve child tabloda kendisinin bir elemanı var ise hata döner
+            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
+
+            //eğer parent silinirse altındaki elemanlar da child tablodan silinir
+            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
         }
 
         //public override int SaveChanges()
