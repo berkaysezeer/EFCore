@@ -61,6 +61,11 @@ using (var context = new AppDbContext())
     //context.SaveChanges();
     #endregion
 
+    #region Eager Loading
+    var categoryWithProducts = context.Categories.Include(c => c.Products).First();
+    var productsWithPF = context.Products.Include(c => c.ProductFeature).First();
+    var product = context.Products.Include(x => x.Category).Include(x => x.ProductFeature).First();
+    #endregion
 
     Console.WriteLine("Kaydedildi");
 }
