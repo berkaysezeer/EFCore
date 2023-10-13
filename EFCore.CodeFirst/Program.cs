@@ -81,6 +81,16 @@ using (var context = new AppDbContext())
         //2.yol (best practice)
         context.Entry(category).Collection(x => x.Products).Load();
     }
+
+    var product = context.Products.First();
+    //
+    //
+    //
+    if (true)
+    {
+        //one to one ilişki olduğu için Reference kullanmamız gerekiyor
+        context.Entry(product).Reference(x => x.ProductFeature).Load();
+    }
     #endregion
 
     Console.WriteLine("Kaydedildi");
