@@ -23,6 +23,9 @@ namespace EFCore.CodeFirst.DAL
         [Precision(15, 2)] //ondalık belirleme attribute
         public decimal Price { get; set; }
 
+        [Precision(15, 2)]
+        public decimal DiscountPrice { get; set; }
+
         public int Stock { get; set; }
 
         [Precision(15, 2)] //ondalık belirleme attribute

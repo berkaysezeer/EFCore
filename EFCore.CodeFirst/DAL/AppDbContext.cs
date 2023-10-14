@@ -131,7 +131,6 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar(200)");
             #endregion
 
-
             #region Indexes
             //modelBuilder.Entity<Product>().HasIndex(x => x.Name);
             //modelBuilder.Entity<Product>().HasIndex(x => new { x.Price, x.Name});
@@ -139,6 +138,9 @@ namespace EFCore.CodeFirst.DAL
             //included index
             //modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock });
             #endregion
+
+            //modelBuilder.Entity<Product>().HasCheckConstraint("PriceConstraint", "[Price]>[DiscountPrice]");
+            modelBuilder.Entity<Product>().ToTable(X => X.HasCheckConstraint("CK_Prices", "[Price] > [DiscountPrice]"));
         }
 
         //public override int SaveChanges()
