@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCore.CodeFirst.DAL
 {
+    [Index(nameof(Price))] //ayrı ayrı da tanımlanabilir
+    [Index(nameof(Name), nameof(Price))] //nonclustered index, birden fazla tanımlanınca composite index denir
     //[Table("ProductTb", Schema = "products")] //tablo adını ProductTb yapmış oluruz
     public class Product
     {
@@ -23,7 +25,7 @@ namespace EFCore.CodeFirst.DAL
 
         public int Stock { get; set; }
 
-        [Precision(15,2)] //ondalık belirleme attribute
+        [Precision(15, 2)] //ondalık belirleme attribute
         public decimal Kdv { get; set; }
 
         public decimal PriceKdv { get; set; }

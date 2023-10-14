@@ -121,6 +121,7 @@ namespace EFCore.CodeFirst.DAL
             #region Keyless Entity Types
             //modelBuilder.Entity<ProductJoin>().HasNoKey();
 
+            //veri tabanına yansıtmamayı sağlarız
             modelBuilder.Entity<ProductJoin>().ToTable(nameof(ProductJoin), t => t.ExcludeFromMigrations());
             #endregion
 
@@ -128,6 +129,15 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Category>().Ignore(x => x.Description); //NotMapped
             //modelBuilder.Entity<Category>().Property(x => x.Url).IsUnicode(false); //varchar
             //modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar(200)");
+            #endregion
+
+
+            #region Indexes
+            //modelBuilder.Entity<Product>().HasIndex(x => x.Name);
+            //modelBuilder.Entity<Product>().HasIndex(x => new { x.Price, x.Name});
+
+            //included index
+            //modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock });
             #endregion
         }
 
