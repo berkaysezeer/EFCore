@@ -111,6 +111,8 @@ using (var context = new AppDbContext())
     //context.SaveChanges();
     //Console.WriteLine("Kaydedildi");
     #endregion
+
+    var productJoins = context.ProductJoins.FromSqlRaw("SELECT P.Id 'Product_Id', C.Name 'CategoryName', P.Name, P.Price FROM Products P JOIN ProductFeatures PF ON PF.Id = P.Id JOIN Categories C ON C.Id = P.CategoryId").ToList();
 }
 
 #region Tracker

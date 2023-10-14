@@ -16,6 +16,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
+        public DbSet<ProductJoin> ProductJoins { get; set; }
 
         //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
@@ -43,31 +44,35 @@ namespace EFCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //FLUENT API ile tablo adı değiştirme
+            #region FLUENT API ile tablo adı değiştirme
             //modelBuilder.Entity<Product>().ToTable("ProductTBB","ProductBbb");
             //modelBuilder.Entity<Product>().HasKey(x=>x.Id); //tablonun primary key alanını belirler
             //modelBuilder.Entity<Product>().Property(x => x.Name).IsRequired();
             //modelBuilder.Entity<Product>().Property(x => x.Description).HasMaxLength(255);
             //modelBuilder.Entity<Product>().Property(x => x.Description).IsRequired().HasMaxLength(255).IsFixedLength(); //max ve min 255 karakter olabilceğini belirtiyor
+            #endregion
 
-            //one to many
-            /*modelBuilder.Entity<Category>()
-                 .HasMany(x => x.Products)
-                 .WithOne(x => x.Category)
-                 .HasForeignKey(x => x.CategoryId);*/
+            #region one to many
+            //       modelBuilder.Entity<Category>()
+            //.HasMany(x => x.Products)
+            //.WithOne(x => x.Category)
+            //.HasForeignKey(x => x.CategoryId);
+            #endregion
 
-            //one to one
+            #region one to one
             /* modelBuilder.Entity<Product>()
-                 .HasOne(x => x.ProductFeature)
-                 .WithOne(x => x.Product)
-                 .HasForeignKey<ProductFeature>(x => x.ProductId); //Foreign Key olacak tabloyu Generic olarak belirtmemiz gerekiyor */
+     .HasOne(x => x.ProductFeature)
+     .WithOne(x => x.Product)
+     .HasForeignKey<ProductFeature>(x => x.ProductId); //Foreign Key olacak tabloyu Generic olarak belirtmemiz gerekiyor */
 
             //one to one ilişkide child tabloda primary key ve foreign keyi aynı tutabiliriz (best practice)
             /*modelBuilder.Entity<Product>()
                    .HasOne(x => x.ProductFeature2)
                    .WithOne(x => x.Product)
                    .HasForeignKey<ProductFeature2>(x => x.Id);*/
+            #endregion
 
+            #region many to many
             /* modelBuilder.Entity<Student>()
                  .HasMany(x => x.Teachers)
                  .WithMany(x => x.Students)
@@ -76,12 +81,16 @@ namespace EFCore.CodeFirst.DAL
                  x => x.HasOne<Teacher>().WithMany().HasForeignKey("Teacher_Id").HasConstraintName("FK_TeacherId"),
                  x => x.HasOne<Student>().WithMany().HasForeignKey("Student_Id").HasConstraintName("FK_StudentId")
                  );*/
+            #endregion
 
-            //Precision fluent api
+            #region Precision fluent api
             //modelBuilder.Entity<Product>().Property(x => x.Price).HasPrecision(15,2)
+            #endregion
 
+            #region HasComputedColumnSql
             //Price ve Kdv bilgisini çarğarak veritabanına yazar
             modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
+            #endregion
 
             #region DeleteBehavior
             ////eğer parent sinilirse child tablodaki categoryid alanı null hale gelir
@@ -109,6 +118,9 @@ namespace EFCore.CodeFirst.DAL
             //});
             #endregion
 
+            #region Keyless Entity Types
+            //modelBuilder.Entity<ProductJoin>().HasNoKey();
+            #endregion
         }
 
         //public override int SaveChanges()
