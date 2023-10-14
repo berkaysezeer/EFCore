@@ -162,19 +162,25 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Left/Right Join
-    var resultLJ = await (from p in context.Products
-                          join pf in context.ProductFeatures on p.Id equals pf.Id
-                          into pflist
-                          from pf in pflist.DefaultIfEmpty() //boi ise defaultu al
-                          select new { p, pf }
-                    ).ToListAsync();
+    //var resultLJ = await (from p in context.Products
+    //                      join pf in context.ProductFeatures on p.Id equals pf.Id
+    //                      into pflist
+    //                      from pf in pflist.DefaultIfEmpty() //boi ise defaultu al
+    //                      select new { p, pf }
+    //                ).ToListAsync();
 
-    var resultRJ = await (from pf in context.ProductFeatures
-                          join p in context.Products on pf.Id equals p.Id
-                          into plist
-                          from p in plist.DefaultIfEmpty() //boi ise defaultu al
-                          select new { p, pf }
-                    ).ToListAsync();
+    //var resultRJ = await (from pf in context.ProductFeatures
+    //                      join p in context.Products on pf.Id equals p.Id
+    //                      into plist
+    //                      from p in plist.DefaultIfEmpty() //boi ise defaultu al
+    //                      select new { p, pf }
+    //                ).ToListAsync();
+    #endregion
+
+    #region Raw Sql
+    var product = await context.Products.FromSqlRaw("SELECT * FROM PRODUCTS WHERE PRICE > {0}", 500).ToListAsync();
+
+    var productWithInterpolated = await context.Products.FromSqlInterpolated($"SELECT * FROM PRODUCTS WHERE PRICE > {500}").ToListAsync();
     #endregion
 }
 
