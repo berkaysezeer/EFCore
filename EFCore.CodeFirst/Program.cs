@@ -160,6 +160,22 @@ using (var context = new AppDbContext())
     //                         ProductPrice = p.Price
     //                     }).ToList();
     #endregion
+
+    #region Left/Right Join
+    var resultLJ = await (from p in context.Products
+                          join pf in context.ProductFeatures on p.Id equals pf.Id
+                          into pflist
+                          from pf in pflist.DefaultIfEmpty() //boi ise defaultu al
+                          select new { p, pf }
+                    ).ToListAsync();
+
+    var resultRJ = await (from pf in context.ProductFeatures
+                          join p in context.Products on pf.Id equals p.Id
+                          into plist
+                          from p in plist.DefaultIfEmpty() //boi ise defaultu al
+                          select new { p, pf }
+                    ).ToListAsync();
+    #endregion
 }
 
 #region Tracker
