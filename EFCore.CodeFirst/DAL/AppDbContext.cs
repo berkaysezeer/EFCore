@@ -17,6 +17,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductJoin> ProductJoins { get; set; }
+        public DbSet<ProductList> ProductList { get; set; }
 
         //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
@@ -121,8 +122,11 @@ namespace EFCore.CodeFirst.DAL
             #region Keyless Entity Types
             //modelBuilder.Entity<ProductJoin>().HasNoKey();
 
+            modelBuilder.Entity<ProductList>().HasNoKey();
+
             //veri tabanına yansıtmamayı sağlarız
             modelBuilder.Entity<ProductJoin>().ToTable(nameof(ProductJoin), t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<ProductList>().ToTable(nameof(ProductList), t => t.ExcludeFromMigrations());
             #endregion
 
             #region Entity Properties
@@ -145,6 +149,10 @@ namespace EFCore.CodeFirst.DAL
             #region ToSqlQuery
             //custom class kullanarak her seferindse select sorgusu yazmamak için kullanırız
             //modelBuilder.Entity<CustomClass>().HasNoKey().ToSqlQuery("Select Name,Price From Products");
+            #endregion
+
+            #region ToView
+            modelBuilder.Entity<ProductList>().ToView("ProductList");
             #endregion
         }
 

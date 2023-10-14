@@ -2,6 +2,7 @@
 using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 //appsetting.json okunabilir oluyor
 Initializer.Build();
@@ -181,6 +182,10 @@ using (var context = new AppDbContext())
     //var product = await context.Products.FromSqlRaw("SELECT * FROM PRODUCTS WHERE PRICE > {0}", 500).ToListAsync();
 
     //var productWithInterpolated = await context.Products.FromSqlInterpolated($"SELECT * FROM PRODUCTS WHERE PRICE > {500}").ToListAsync();
+    #endregion
+
+    #region ToView
+    //var products = context.ProductList.ToList();
     #endregion
 }
 
