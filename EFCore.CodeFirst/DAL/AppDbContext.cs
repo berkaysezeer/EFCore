@@ -17,9 +17,10 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
-        //Base Class'ı DbSet olarak eklemiyoruz
+        //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<BasePerson> People { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -81,15 +82,21 @@ namespace EFCore.CodeFirst.DAL
             modelBuilder.Entity<Product>().Property(x => x.PriceKdv).HasComputedColumnSql("[Price]*[Kdv]");
 
             #region DeleteBehavior
-            //eğer parent sinilirse child tablodaki categoryid alanı null hale gelir
-            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.SetNull);
+            ////eğer parent sinilirse child tablodaki categoryid alanı null hale gelir
+            //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.SetNull);
 
-            //eğer parent silinmeye çalışılırsa ve child tabloda kendisinin bir elemanı var ise hata döner
-            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
+            ////eğer parent silinmeye çalışılırsa ve child tabloda kendisinin bir elemanı var ise hata döner
+            //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
 
-            //eğer parent silinirse altındaki elemanlar da child tablodan silinir
-            modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+            ////eğer parent silinirse altındaki elemanlar da child tablodan silinir
+            //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
             #endregion
+
+            //TPT ( Table-Per-Type)
+            //her class için ayrı tablo oluşturur
+            modelBuilder.Entity<BasePerson>().ToTable("People");
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Manager>().ToTable("Managers");
 
         }
 
