@@ -141,6 +141,11 @@ namespace EFCore.CodeFirst.DAL
 
             //modelBuilder.Entity<Product>().HasCheckConstraint("PriceConstraint", "[Price]>[DiscountPrice]");
             modelBuilder.Entity<Product>().ToTable(X => X.HasCheckConstraint("CK_Prices", "[Price] > [DiscountPrice]"));
+
+            #region ToSqlQuery
+            //custom class kullanarak her seferindse select sorgusu yazmamak için kullanırız
+            //modelBuilder.Entity<CustomClass>().HasNoKey().ToSqlQuery("Select Name,Price From Products");
+            #endregion
         }
 
         //public override int SaveChanges()

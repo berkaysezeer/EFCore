@@ -178,9 +178,9 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Raw Sql
-    var product = await context.Products.FromSqlRaw("SELECT * FROM PRODUCTS WHERE PRICE > {0}", 500).ToListAsync();
+    //var product = await context.Products.FromSqlRaw("SELECT * FROM PRODUCTS WHERE PRICE > {0}", 500).ToListAsync();
 
-    var productWithInterpolated = await context.Products.FromSqlInterpolated($"SELECT * FROM PRODUCTS WHERE PRICE > {500}").ToListAsync();
+    //var productWithInterpolated = await context.Products.FromSqlInterpolated($"SELECT * FROM PRODUCTS WHERE PRICE > {500}").ToListAsync();
     #endregion
 }
 
