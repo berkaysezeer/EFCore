@@ -114,13 +114,52 @@ using (var context = new AppDbContext())
 
     var productJoins = context.ProductJoins.FromSqlRaw("SELECT P.Id 'Product_Id', C.Name 'CategoryName', P.Name, P.Price FROM Products P JOIN ProductFeatures PF ON PF.Id = P.Id JOIN Categories C ON C.Id = P.CategoryId").ToList();
 
+    #region Client vs Server Evaluation
     //Aşağıdaki sorgu RemoveSpace metodunu normal sql sorgusuna çevirmeye çalışacağı için hata veriyor (server evaluation). yani local metodlar bu şekilde kullanılamaz. bunun için öncelikle tolist kullanmalıyız
     //var products = context.Products.Where(x => RemoveSpace(x.Description) == "Uçlukalem").ToList();
 
     //var products = context.Products.ToList() --> server evaluation, RemoveSpace --> client evaluation
     //var products = context.Products.ToList().Where(x => RemoveSpace(x.Description) == "Uçlukalem").ToList();
+    //var products = context.Products.ToList().Select(x => new { Description = RemoveSpace(x.Description), x.Name }).ToList();
+    #endregion
 
-    var products = context.Products.ToList().Select(x => new { Description = RemoveSpace(x.Description), x.Name }).ToList();
+    #region Inner Join
+    //var result = context.Categories
+    //    .Join(context.Products, x => x.Id, y => y.CategoryId, (c, p) => new
+    //    {
+    //        CategoryName = c.Name,
+    //        CategoryDescription = c.Description,
+    //        ProductName = p.Name,
+    //        ProductPrice = p.Price
+    //    }).ToList();
+
+    //sadece product ile ilgili alanlar gelir
+    //var resultv2 = context.Categories
+    //    .Join(context.Products, x => x.Id, y => y.CategoryId, (c, p) => p).ToList();
+
+    //3lü inner join
+    //var resultv3 = context.Categories
+    //   .Join(context.Products, x => x.Id, y => y.CategoryId, (c, p) => new { c, p })
+    //   .Join(context.ProductFeatures, x => x.p.Id, y => y.Id, (c, pf) => new
+    //   {
+
+    //       CategoryName = c.c.Name,
+    //       ProductName = c.p.Name,
+    //       Color = pf.Color
+    //   })
+    //   .ToList();
+
+    //2.yol
+    //var resultWithLinqQuery = (from c in context.Categories
+    //                     join p in context.Products on c.Id equals p.CategoryId
+    //                     select new
+    //                     {
+    //                         CategoryName = c.Name,
+    //                         CategoryDescription = c.Description,
+    //                         ProductName = p.Name,
+    //                         ProductPrice = p.Price
+    //                     }).ToList();
+    #endregion
 }
 
 #region Tracker
