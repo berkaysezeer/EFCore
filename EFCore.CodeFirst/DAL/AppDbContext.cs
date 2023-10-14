@@ -120,6 +120,14 @@ namespace EFCore.CodeFirst.DAL
 
             #region Keyless Entity Types
             //modelBuilder.Entity<ProductJoin>().HasNoKey();
+
+            modelBuilder.Entity<ProductJoin>().ToTable(nameof(ProductJoin), t => t.ExcludeFromMigrations());
+            #endregion
+
+            #region Entity Properties
+            //modelBuilder.Entity<Category>().Ignore(x => x.Description); //NotMapped
+            //modelBuilder.Entity<Category>().Property(x => x.Url).IsUnicode(false); //varchar
+            //modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnType("nvarchar(200)");
             #endregion
         }
 
