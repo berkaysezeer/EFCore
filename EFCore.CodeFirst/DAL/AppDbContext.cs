@@ -20,7 +20,9 @@ namespace EFCore.CodeFirst.DAL
         //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<BasePerson> People { get; set; }
+        //public DbSet<BasePerson> People { get; set; }
+
+        //Owned Entity Types için DbSet<BasePerson> People'ı kaldırıyoruz
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -92,11 +94,20 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Category>().HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
             #endregion
 
-            //TPT ( Table-Per-Type)
+            #region TPT ( Table-Per-Type)
             //her class için ayrı tablo oluşturur
-            modelBuilder.Entity<BasePerson>().ToTable("People");
-            modelBuilder.Entity<Employee>().ToTable("Employees");
-            modelBuilder.Entity<Manager>().ToTable("Managers");
+            //modelBuilder.Entity<BasePerson>().ToTable("People");
+            //modelBuilder.Entity<Employee>().ToTable("Employees");
+            //modelBuilder.Entity<Manager>().ToTable("Managers");
+            #endregion
+
+            #region Owned Entity Types
+            //modelBuilder.Entity<Manager>().OwnsOne(x => x.Person);
+            //modelBuilder.Entity<Employee>().OwnsOne(x => x.Person, p =>
+            //{
+            //    p.Property(x => x.FirstName).HasColumnName("Name");
+            //});
+            #endregion
 
         }
 

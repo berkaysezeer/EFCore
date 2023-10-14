@@ -99,6 +99,18 @@ using (var context = new AppDbContext())
     //var category = await context.Categories.FirstAsync();
     //var products = category.Products;
     #endregion
+
+    #region Owned Entity Types
+    //var employee = new Employee()
+    //{
+    //    Salary = 5,
+    //    Person = new Person() { Age = 1, FirstName = "Berkay", LastName = "Sezer" }
+    //};
+
+    //context.Employees.Add(employee);
+    //context.SaveChanges();
+    //Console.WriteLine("Kaydedildi");
+    #endregion
 }
 
 #region Tracker

@@ -47,13 +47,6 @@ namespace EFCore.CodeFirst.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
@@ -69,13 +62,6 @@ namespace EFCore.CodeFirst.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Grade")
                         .HasColumnType("int");
@@ -212,6 +198,66 @@ namespace EFCore.CodeFirst.Migrations
                     b.HasIndex("TeachersId");
 
                     b.ToTable("StudentTeacher");
+                });
+
+            modelBuilder.Entity("EFCore.CodeFirst.DAL.Employee", b =>
+                {
+                    b.OwnsOne("EFCore.CodeFirst.DAL.Person", "Person", b1 =>
+                        {
+                            b1.Property<int>("EmployeeId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Age")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("Employees");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+                        });
+
+                    b.Navigation("Person")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EFCore.CodeFirst.DAL.Manager", b =>
+                {
+                    b.OwnsOne("EFCore.CodeFirst.DAL.Person", "Person", b1 =>
+                        {
+                            b1.Property<int>("ManagerId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Age")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ManagerId");
+
+                            b1.ToTable("Managers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManagerId");
+                        });
+
+                    b.Navigation("Person")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EFCore.CodeFirst.DAL.Product", b =>
