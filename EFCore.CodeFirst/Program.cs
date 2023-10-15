@@ -189,17 +189,17 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Query Tag
-    var resultWithLinqQuery = (from c in context.Categories
-                               join p in context.Products on c.Id equals p.CategoryId
-                               select new
-                               {
-                                   CategoryName = c.Name,
-                                   CategoryDescription = c.Description,
-                                   ProductName = p.Name,
-                                   ProductPrice = p.Price
-                               })
-                               .TagWith("Kategorili ürün listesi")
-                               .ToList();
+    //var resultWithLinqQuery = (from c in context.Categories
+    //                           join p in context.Products on c.Id equals p.CategoryId
+    //                           select new
+    //                           {
+    //                               CategoryName = c.Name,
+    //                               CategoryDescription = c.Description,
+    //                               ProductName = p.Name,
+    //                               ProductPrice = p.Price
+    //                           })
+    //                           .TagWith("Kategorili ürün listesi")
+    //                           .ToList();
     #endregion
 }
 
@@ -304,11 +304,10 @@ using (var context = new AppDbContext())
 #endregion
 
 #region Pagination
-GetProducts(1, 6).ForEach(x =>
-{
-    Console.WriteLine($"{x.Id} - {x.Name}");
-});
-
+//GetProducts(1, 6).ForEach(x =>
+//{
+//    Console.WriteLine($"{x.Id} - {x.Name}");
+//});
 
 static List<Product> GetProducts(int page, int pageSize)
 {
