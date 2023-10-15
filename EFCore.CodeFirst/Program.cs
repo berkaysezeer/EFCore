@@ -13,9 +13,6 @@ Initializer.Build();
 
 using (var context = new AppDbContext())
 {
-    ////Kalemler kategorisine kalem 1'i ekliyoruz
-    //var category = new Category() { Name = "Kalemler" };
-
     #region 2. Yol One to many
     ////2.yol 
     ////category.Products.Add(new() { Name = "Kalem 1", Price = 100, Stock = 200, Barcode = "1000", Description = "Faber"});
@@ -258,11 +255,49 @@ using (var context = new AppDbContext())
 
     #region DTO with mapper
     //bu yöntemde sql select içine Products içindeki tüm alanlar yazılır
-    var product = context.Products.ToList();
-    var productDto = ObjectMapper.Mapper.Map<List<ProductWithMapperDto>>(product);
+    //var product = context.Products.ToList();
+    //var productDto = ObjectMapper.Mapper.Map<List<ProductWithMapperDto>>(product);
 
     //bu yöntemde sadece ihtiyacımız olan alanlar select içine alınır
     var productDtoV2 = context.Products.ProjectTo<ProductWithMapperDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
+    #endregion
+
+    #region Transaction
+    using (var transaction = context.Database.BeginTransaction())
+    {
+        Category category = new()
+        {
+            Name = "Kurslar",
+            Url = "kurslar.berkaysezer.com",
+            Description = "Online kurslara katılım"
+        };
+
+        context.Add(category);
+        // CategoryId = category.Id kullanabilmek için aşağıdaki satırı yazmamız gerekiyor
+        await context.SaveChangesAsync();
+
+        Product product = new()
+        {
+            Name = "C# Entity Framwork Core",
+            Price = 100,
+            Stock = 200,
+            Barcode = "1000",
+            Description = "C# ",
+            DiscountPrice = 50,
+            Kdv = 1.18M,
+            CategoryId = category.Id,
+            ProductFeature = new()
+            {
+                Color = "Blue",
+                Height = 100,
+                Width = 100
+            }
+        };
+
+        context.Add(product);
+        await context.SaveChangesAsync();
+        await transaction.CommitAsync();
+    }
     #endregion
 }
 
