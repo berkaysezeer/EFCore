@@ -113,8 +113,6 @@ using (var context = new AppDbContext())
     //Console.WriteLine("Kaydedildi");
     #endregion
 
-    var productJoins = context.ProductJoins.FromSqlRaw("SELECT P.Id 'Product_Id', C.Name 'CategoryName', P.Name, P.Price FROM Products P JOIN ProductFeatures PF ON PF.Id = P.Id JOIN Categories C ON C.Id = P.CategoryId").ToList();
-
     #region Client vs Server Evaluation
     //Aşağıdaki sorgu RemoveSpace metodunu normal sql sorgusuna çevirmeye çalışacağı için hata veriyor (server evaluation). yani local metodlar bu şekilde kullanılamaz. bunun için öncelikle tolist kullanmalıyız
     //var products = context.Products.Where(x => RemoveSpace(x.Description) == "Uçlukalem").ToList();
@@ -122,6 +120,8 @@ using (var context = new AppDbContext())
     //var products = context.Products.ToList() --> server evaluation, RemoveSpace --> client evaluation
     //var products = context.Products.ToList().Where(x => RemoveSpace(x.Description) == "Uçlukalem").ToList();
     //var products = context.Products.ToList().Select(x => new { Description = RemoveSpace(x.Description), x.Name }).ToList();
+
+    //var productJoins = context.ProductJoins.FromSqlRaw("SELECT P.Id 'Product_Id', C.Name 'CategoryName', P.Name, P.Price FROM Products P JOIN ProductFeatures PF ON PF.Id = P.Id JOIN Categories C ON C.Id = P.CategoryId").ToList();
     #endregion
 
     #region Inner Join
@@ -200,6 +200,18 @@ using (var context = new AppDbContext())
     //                           })
     //                           .TagWith("Kategorili ürün listesi")
     //                           .ToList();
+    #endregion
+
+    #region Stored Procedure
+    var products = await context.Products
+        .FromSqlRaw("exec sp_getproducts")
+        .IgnoreQueryFilters()
+        .ToListAsync();
+
+    var productsWithParameter = await context.Products
+       .FromSqlRaw("exec sp_getproducts_withparameter 1,50")
+       .IgnoreQueryFilters()
+       .ToListAsync();
     #endregion
 }
 
