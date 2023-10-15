@@ -232,6 +232,8 @@ using (var context = new AppDbContext())
 
     string name = "silgi";
     var products = context.Products.FromSqlInterpolated($"select * from fc_productlistwitparameters({name})").ToList();
+
+    var product = context.GetProductsWithFunction(name).ToList();
     #endregion
 }
 

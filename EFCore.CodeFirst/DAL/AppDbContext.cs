@@ -24,6 +24,9 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<Employee> Employees { get; set; }
         //public DbSet<BasePerson> People { get; set; }
 
+        //Function çağrımak için 2. yol
+        public IQueryable<Product> GetProductsWithFunction(string name) => FromExpression(() => GetProductsWithFunction(name));
+
         //Owned Entity Types için DbSet<BasePerson> People'ı kaldırıyoruz
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -170,6 +173,10 @@ namespace EFCore.CodeFirst.DAL
             //fonksiyon parametre almaszsa bu şekilde kullanabiliriz
             //modelBuilder.Entity<Product>().ToFunction("fc_productlist");
 
+            //ikinci yol ile fonkisyon çağırmak için ayar yapıyoruz
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductsWithFunction), new[] {
+            typeof(string)
+            })!).HasName("fc_productlistwitparameters");
             #endregion
         }
 
