@@ -305,6 +305,7 @@ static  List<Product> GetProducts(int page, int pageSize)
         //page 3 size = 2 ==> skip: 4 take: 2
 
         var products = context.Products
+            .IgnoreQueryFilters() //filtreleri iptal edebiliyoruz
             .OrderByDescending(x => x.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
