@@ -143,8 +143,10 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<Product>().HasIndex(x => x.Name).IncludeProperties(x => new { x.Price, x.Stock });
             #endregion
 
+            #region HasCheckConstraint
             //modelBuilder.Entity<Product>().HasCheckConstraint("PriceConstraint", "[Price]>[DiscountPrice]");
             modelBuilder.Entity<Product>().ToTable(X => X.HasCheckConstraint("CK_Prices", "[Price] > [DiscountPrice]"));
+            #endregion
 
             #region ToSqlQuery
             //custom class kullanarak her seferindse select sorgusu yazmamak için kullanırız

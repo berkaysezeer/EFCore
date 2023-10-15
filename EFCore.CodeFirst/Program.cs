@@ -289,6 +289,32 @@ using (var context = new AppDbContext())
 //} 
 #endregion
 
+#region Pagination
+GetProducts(2, 2).ForEach(x => {
+    Console.WriteLine($"{x.Id} - {x.Name}");
+});
+
+
+static  List<Product> GetProducts(int page, int pageSize)
+{
+    using (var context = new AppDbContext())
+    {
+        //page 1 size = 2 ==> skip: 0 take: 2
+        //page 2 size = 2 ==> skip: 2 take: 2
+        //page 3 size = 2 ==> skip: 4 take: 2
+
+        var products = context.Products
+            .OrderByDescending(x => x.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+        return products;
+    }
+
+}
+
+#endregion
+
 string RemoveSpace(string value)
 {
     return value.Replace(" ", "");
