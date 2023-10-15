@@ -23,9 +23,11 @@ namespace EFCore.CodeFirst.DAL
         //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Employee> Employees { get; set; }
+
         //public DbSet<BasePerson> People { get; set; }
 
         //Function çağrımak için 2. yol
+
         public IQueryable<Product> GetProductsWithFunction(string name) => FromExpression(() => GetProductsWithFunction(name));
 
         public string GetCategoryNameById(int id)

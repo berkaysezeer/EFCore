@@ -1,6 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using AutoMapper.QueryableExtensions;
 using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
+using EFCore.CodeFirst.DTOs;
+using EFCore.CodeFirst.Mappers;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -230,18 +233,36 @@ using (var context = new AppDbContext())
     #region Function
     //var products = context.Products.ToList();
 
-    string name = "silgi";
-    var products = context.Products.FromSqlInterpolated($"select * from fc_productlistwitparameters({name})").ToList();
+    //string name = "silgi";
+    //var products = context.Products.FromSqlInterpolated($"select * from fc_productlistwitparameters({name})").ToList();
 
-    var product = context.GetProductsWithFunction(name).ToList();
+    //var product = context.GetProductsWithFunction(name).ToList();
 
-    int categoryId = 1;
+    //int categoryId = 1;
     //var category = context.Categories.Select(x => new
     //{
     //    Name = context.GetCategoryNameById(categoryId)
-    //}).ToList();
+    //});
 
-    var categoryName = context.CategoryNames.FromSqlInterpolated($"select dbo.fc_getcategorynamewithid({categoryId}) Name").First().Name;
+    //var categoryName = context.CategoryNames.FromSqlInterpolated($"select dbo.fc_getcategorynamewithid({categoryId}) Name").First().Name;
+    #endregion
+
+    #region DTO
+    //var product = context.Products.Select(x => new ProductDto
+    //{
+    //    Color = x.ProductFeature.Color,
+    //    Description = x.Description,
+    //    Name = x.Name
+    //}).ToList();
+    #endregion
+
+    #region DTO with mapper
+    //bu yöntemde sql select içine Products içindeki tüm alanlar yazılır
+    var product = context.Products.ToList();
+    var productDto = ObjectMapper.Mapper.Map<List<ProductWithMapperDto>>(product);
+
+    //bu yöntemde sadece ihtiyacımız olan alanlar select içine alınır
+    var productDtoV2 = context.Products.ProjectTo<ProductWithMapperDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
     #endregion
 }
 
@@ -372,8 +393,6 @@ static List<Product> GetProducts(int page, int pageSize)
 }
 
 #endregion
-
-
 
 string RemoveSpace(string value)
 {
