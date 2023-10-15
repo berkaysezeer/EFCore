@@ -290,9 +290,10 @@ using (var context = new AppDbContext())
 #endregion
 
 #region Pagination
-GetProducts(2, 2).ForEach(x => {
-    Console.WriteLine($"{x.Id} - {x.Name}");
-});
+//GetProducts(1, 6).ForEach(x =>
+//{
+//    Console.WriteLine($"{x.Id} - {x.Name}");
+//});
 
 
 static  List<Product> GetProducts(int page, int pageSize)

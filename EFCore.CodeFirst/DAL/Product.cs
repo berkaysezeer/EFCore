@@ -40,6 +40,8 @@ namespace EFCore.CodeFirst.DAL
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)] //hem update hem de inser yapıldığında LastAccessDate DateTime.Now; doldurulur
         public DateTime? LastAccessDate { get; set; } = DateTime.Now;
 
+        public bool IsDeleted { get; set; }
+
         //One to Many Convension
 
         //Lazy Loading yapabilmek için virtual yapıyoruz

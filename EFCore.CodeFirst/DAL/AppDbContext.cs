@@ -156,6 +156,11 @@ namespace EFCore.CodeFirst.DAL
             #region ToView
             modelBuilder.Entity<ProductList>().ToView("ProductList");
             #endregion
+
+            #region Global Query Filters
+            modelBuilder.Entity<Product>().Property(x => x.IsDeleted).HasDefaultValue(false);
+            modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            #endregion
         }
 
         //public override int SaveChanges()
