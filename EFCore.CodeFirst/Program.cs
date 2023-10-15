@@ -187,6 +187,20 @@ using (var context = new AppDbContext())
     #region ToView
     //var products = context.ProductList.ToList();
     #endregion
+
+    #region Query Tag
+    var resultWithLinqQuery = (from c in context.Categories
+                               join p in context.Products on c.Id equals p.CategoryId
+                               select new
+                               {
+                                   CategoryName = c.Name,
+                                   CategoryDescription = c.Description,
+                                   ProductName = p.Name,
+                                   ProductPrice = p.Price
+                               })
+                               .TagWith("Kategorili ürün listesi")
+                               .ToList();
+    #endregion
 }
 
 #region Tracker
@@ -290,13 +304,13 @@ using (var context = new AppDbContext())
 #endregion
 
 #region Pagination
-//GetProducts(1, 6).ForEach(x =>
-//{
-//    Console.WriteLine($"{x.Id} - {x.Name}");
-//});
+GetProducts(1, 6).ForEach(x =>
+{
+    Console.WriteLine($"{x.Id} - {x.Name}");
+});
 
 
-static  List<Product> GetProducts(int page, int pageSize)
+static List<Product> GetProducts(int page, int pageSize)
 {
     using (var context = new AppDbContext())
     {
@@ -305,6 +319,7 @@ static  List<Product> GetProducts(int page, int pageSize)
         //page 3 size = 2 ==> skip: 4 take: 2
 
         var products = context.Products
+            .TagWith("Ürün listesini dönen query") //SQL sorgusuna yorum satırı olarak ekle
             .IgnoreQueryFilters() //filtreleri iptal edebiliyoruz
             .OrderByDescending(x => x.Id)
             .Skip((page - 1) * pageSize)
@@ -316,6 +331,8 @@ static  List<Product> GetProducts(int page, int pageSize)
 }
 
 #endregion
+
+
 
 string RemoveSpace(string value)
 {

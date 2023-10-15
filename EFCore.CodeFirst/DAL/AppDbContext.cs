@@ -31,7 +31,9 @@ namespace EFCore.CodeFirst.DAL
             Initializer.Build();
             //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information).UseLazyLoadingProxies().UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
 
-            optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
+            optionsBuilder
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
 
             /*
             Trace
