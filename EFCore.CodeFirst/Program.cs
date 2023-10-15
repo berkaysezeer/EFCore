@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EFCore.CodeFirst;
 using EFCore.CodeFirst.DAL;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
@@ -208,10 +209,22 @@ using (var context = new AppDbContext())
         .IgnoreQueryFilters()
         .ToListAsync();
 
+    int categoryId = 1;
+    decimal price = 50;
+
     var productsWithParameter = await context.Products
-       .FromSqlRaw("exec sp_getproducts_withparameter 1,50")
+       .FromSqlInterpolated($"exec sp_getproducts_withparameter {categoryId},{price}")
        .IgnoreQueryFilters()
        .ToListAsync();
+
+    //Stored Procedure insert
+    string name = "Teknoloji";
+    string url = "teknoloji.berkaysezer.com";
+    var newCategoryId = new SqlParameter("@newId", System.Data.SqlDbType.Int);
+    newCategoryId.Direction = System.Data.ParameterDirection.Output;
+
+    var category = context.Database.ExecuteSqlInterpolated($"exec sp_insertcategory {name},{url},{newCategoryId} out");
+    var newId = newCategoryId.Value;
     #endregion
 }
 
