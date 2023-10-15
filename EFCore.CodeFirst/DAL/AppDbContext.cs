@@ -18,6 +18,7 @@ namespace EFCore.CodeFirst.DAL
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductJoin> ProductJoins { get; set; }
         public DbSet<ProductList> ProductList { get; set; }
+        public DbSet<CategoryName> CategoryNames { get; set; }
 
         //Base Class'ı DbSet olarak eklemiyoruz. eğer  public DbSet<BasePerson> Persons da eklemiş olsaydık o zaman Managers ve Employees tabloları oluşmayacak, tüm özellikler Persons tablosunda toplanacaktı 
         public DbSet<Manager> Managers { get; set; }
@@ -26,6 +27,11 @@ namespace EFCore.CodeFirst.DAL
 
         //Function çağrımak için 2. yol
         public IQueryable<Product> GetProductsWithFunction(string name) => FromExpression(() => GetProductsWithFunction(name));
+
+        public string GetCategoryNameById(int id)
+        {
+            throw new Exception();
+        }
 
         //Owned Entity Types için DbSet<BasePerson> People'ı kaldırıyoruz
 
@@ -129,10 +135,12 @@ namespace EFCore.CodeFirst.DAL
             //modelBuilder.Entity<ProductJoin>().HasNoKey();
 
             modelBuilder.Entity<ProductList>().HasNoKey();
+            modelBuilder.Entity<CategoryName>().HasNoKey();
 
             //veri tabanına yansıtmamayı sağlarız
             modelBuilder.Entity<ProductJoin>().ToTable(nameof(ProductJoin), t => t.ExcludeFromMigrations());
             modelBuilder.Entity<ProductList>().ToTable(nameof(ProductList), t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<CategoryName>().ToTable(nameof(CategoryName), t => t.ExcludeFromMigrations());
             #endregion
 
             #region Entity Properties
@@ -177,6 +185,10 @@ namespace EFCore.CodeFirst.DAL
             modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetProductsWithFunction), new[] {
             typeof(string)
             })!).HasName("fc_productlistwitparameters");
+
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetCategoryNameById), new[] {
+            typeof(int)
+            })!).HasName("fc_getcategorynamewithid");
             #endregion
         }
 

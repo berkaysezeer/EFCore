@@ -234,6 +234,14 @@ using (var context = new AppDbContext())
     var products = context.Products.FromSqlInterpolated($"select * from fc_productlistwitparameters({name})").ToList();
 
     var product = context.GetProductsWithFunction(name).ToList();
+
+    int categoryId = 1;
+    //var category = context.Categories.Select(x => new
+    //{
+    //    Name = context.GetCategoryNameById(categoryId)
+    //}).ToList();
+
+    var categoryName = context.CategoryNames.FromSqlInterpolated($"select dbo.fc_getcategorynamewithid({categoryId}) Name").First().Name;
     #endregion
 }
 
