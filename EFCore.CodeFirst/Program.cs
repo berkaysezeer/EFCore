@@ -204,27 +204,34 @@ using (var context = new AppDbContext())
     #endregion
 
     #region Stored Procedure
-    var products = await context.Products
-        .FromSqlRaw("exec sp_getproducts")
-        .IgnoreQueryFilters()
-        .ToListAsync();
+    //var products = await context.Products
+    //    .FromSqlRaw("exec sp_getproducts")
+    //    .IgnoreQueryFilters()
+    //    .ToListAsync();
 
-    int categoryId = 1;
-    decimal price = 50;
+    //int categoryId = 1;
+    //decimal price = 50;
 
-    var productsWithParameter = await context.Products
-       .FromSqlInterpolated($"exec sp_getproducts_withparameter {categoryId},{price}")
-       .IgnoreQueryFilters()
-       .ToListAsync();
+    //var productsWithParameter = await context.Products
+    //   .FromSqlInterpolated($"exec sp_getproducts_withparameter {categoryId},{price}")
+    //   .IgnoreQueryFilters()
+    //   .ToListAsync();
 
     //Stored Procedure insert
-    string name = "Teknoloji";
-    string url = "teknoloji.berkaysezer.com";
-    var newCategoryId = new SqlParameter("@newId", System.Data.SqlDbType.Int);
-    newCategoryId.Direction = System.Data.ParameterDirection.Output;
+    //string name = "Teknoloji";
+    //string url = "teknoloji.berkaysezer.com";
+    //var newCategoryId = new SqlParameter("@newId", System.Data.SqlDbType.Int);
+    //newCategoryId.Direction = System.Data.ParameterDirection.Output;
 
-    var category = context.Database.ExecuteSqlInterpolated($"exec sp_insertcategory {name},{url},{newCategoryId} out");
-    var newId = newCategoryId.Value;
+    //var category = context.Database.ExecuteSqlInterpolated($"exec sp_insertcategory {name},{url},{newCategoryId} out");
+    //var newId = newCategoryId.Value;
+    #endregion
+
+    #region Function
+    //var products = context.Products.ToList();
+
+    string name = "silgi";
+    var products = context.Products.FromSqlInterpolated($"select * from fc_productlistwitparameters({name})").ToList();
     #endregion
 }
 

@@ -163,7 +163,13 @@ namespace EFCore.CodeFirst.DAL
             #region Global Query Filters
             modelBuilder.Entity<Product>().Property(x => x.IsDeleted).HasDefaultValue(false);
             //her seferinde sorguya isdeleted dahil etmemize gerek kalmıyor
-            modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            //modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
+            #endregion
+
+            #region Function
+            //fonksiyon parametre almaszsa bu şekilde kullanabiliriz
+            //modelBuilder.Entity<Product>().ToFunction("fc_productlist");
+
             #endregion
         }
 
