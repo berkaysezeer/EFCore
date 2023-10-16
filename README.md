@@ -32,22 +32,22 @@ Configuration
 Relation Ships 
 DatabaseGenerated Attribute
 
--- Related Data Load --
+[Related Data Load]
 Eager Loading
 Explicit Loading
 Lazy Loading
 
--- Inheritance --
+[Inheritance]
 TPH ( Table-Per-Hierarchy)
 TPT ( Table-Per-Type)
 
--- Model --
+[Model]
 Owned Entity Types
 Keyless Entity Types
 Entity Properties
 Indexes
 
--- Qery --
+[Qery]
 Client vs Server Evaluation
 Join (Inner/Left/Right/Full Outer)
 Raw Sql
@@ -61,7 +61,7 @@ Tracking / No Tracking
 Store Procedured
 Function
 
--- Projections --
+[Projections]
 Anonymous Types
 DTO/ViewModel
 AutoMapper
@@ -69,7 +69,7 @@ AutoMapper
 Transaction
 Multiple DbContext Instance
 
--- Isolation Levels --
+[Isolation Levels]
 Concurrency
 DbUpdateConcurrencyException
 Read uncommitted
