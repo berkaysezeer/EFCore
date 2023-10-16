@@ -44,8 +44,9 @@ namespace EFCore.CodeFirst.DAL
 
             optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
-                .UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"))
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); //global düzeyde sorguların track edilmesini önler. AsNoTracking() yazmamıza gerek kalmaz 
+                .UseSqlServer(Initializer.Configuration.GetConnectionString("ConStr"));
+                //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //global düzeyde sorguların track edilmesini önler. AsNoTracking() yazmamıza gerek kalmaz 
 
             /*
             Trace

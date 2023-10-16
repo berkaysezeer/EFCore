@@ -299,6 +299,44 @@ using (var context = new AppDbContext())
         await transaction.CommitAsync();
     }
     #endregion
+
+    #region Isolation Levels
+
+    #region Read uncommitted
+    //default: read committed --> datanın commit edilmeden önceki halini okur
+    //repeatable read: repeatable read olan bir transactionda okuma yapılırken başka bir transaction update yapamaz
+
+    /*bir transaction commit edilmemiş değeri başka bir transaction okumaya çalışırsa uncommit değer gelir
+    System.Data.IsolationLevel.ReadUncommitted yazmamıza gerek yoktu (*okuma yapmadığımız için). Çünkü IsolationLevel okuma yapan transaction için önemli ---> MYTransaction
+    eğer ReadUncommitted olan bir transaction güncelleme yaparsak ve başka bir transaction da güncelleme yapmaya çalışırsa transaction beklemeye alır. ne zaman ReadUncommitted olan transaction commit edilirse diğeri de o zaman commit edilir (aynı satır için güncelleme)*/
+    using (var transaction = context.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+    {
+        var product = context.Products.First();
+        product.Price = 4000; //100 olan Price değerini 4000 yapıyoruz. Fakat Commit() etmiyoruz. Yine de 4000 değerini okuyor
+        context.SaveChanges();
+
+        transaction.Commit();
+
+        /*
+         
+        SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+        BEGIN TRANSACTION MYTransaction
+        BEGIN TRY
+        SELECT * FROM Products
+        COMMIT TRANSACTION MYTransaction
+        PRINT 'Başarılı'
+        END TRY
+        BEGIN CATCH
+        ROLLBACK TRANSACTION MYTransaction
+        PRINT 'Hata'
+        END CATCH
+
+        */
+    }
+
+    #endregion
+
+    #endregion
 }
 
 #region Tracker
