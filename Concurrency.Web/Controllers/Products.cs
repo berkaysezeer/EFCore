@@ -44,9 +44,6 @@ namespace Concurrency.Web.Controllers
                 //property listesi döner
                 var databaseValues = entry.GetDatabaseValues();
 
-                //veri tabanındaki değerler
-                var databaseProduct = databaseValues.ToObject() as Product;
-
                 //property listesi döner
                 var client = entry.CurrentValues;
 
@@ -57,6 +54,9 @@ namespace Concurrency.Web.Controllers
                 }
                 else
                 {
+                    //veri tabanındaki değerler
+                    var databaseProduct = databaseValues.ToObject() as Product;
+
                     ModelState.AddModelError(string.Empty, "Bu ürün başka bir kullanıcı tarafından güncellendi");
                     ModelState.AddModelError(string.Empty, $"Güncel değer: {databaseProduct.Name} {databaseProduct.Price} ({databaseProduct.Stock})");
                 }
